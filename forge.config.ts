@@ -7,6 +7,7 @@ import { MakerDMG } from '@electron-forge/maker-dmg';
 import { MakerAppImage } from '@reforged/maker-appimage';
 import { AutoUnpackNativesPlugin } from '@electron-forge/plugin-auto-unpack-natives';
 import { WebpackPlugin } from '@electron-forge/plugin-webpack';
+import { exec } from 'child_process';
 
 import { mainConfig, rendererConfig } from './webpack.config';
 import * as sidecar from './forge.sidecar';
@@ -25,8 +26,7 @@ if (process.env.NODE_ENV === 'production') {
 	};
 
 	winSigningConfig = {
-		certificateFile: process.env.WINDOWS_SIGNING_CERT_PATH,
-		certificatePassword: process.env.WINDOWS_SIGNING_PASSWORD,
+		signWithParams: `-sha1 ${process.env.SM_CODE_SIGNING_CERT_SHA1_HASH} -tr ${process.env.TIMESTAMP_SERVER} -td sha256 -fd sha256 -d balena-etcher`,
 	};
 }
 
@@ -42,8 +42,8 @@ const config: ForgeConfig = {
 		darwinDarkModeSupport: true,
 		protocols: [{ name: 'etcher', schemes: ['etcher'] }],
 		extraResource: [
-			'lib/shared/catalina-sudo/sudo-askpass.osascript-zh.js',
-			'lib/shared/catalina-sudo/sudo-askpass.osascript-en.js',
+			'lib/shared/sudo/sudo-askpass.osascript-zh.js',
+			'lib/shared/sudo/sudo-askpass.osascript-en.js',
 		],
 		osxSign: {
 			optionsForFile: () => ({
@@ -53,11 +53,14 @@ const config: ForgeConfig = {
 		},
 		...osxSigningConfig,
 	},
-	rebuildConfig: {},
+	rebuildConfig: {
+		onlyModules: [], // prevent rebuilding *any* native modules as they won't be used by electron but by the sidecar
+	},
 	makers: [
 		new MakerZIP(),
 		new MakerSquirrel({
 			setupIcon: 'assets/icon.ico',
+			loadingGif: 'assets/icon.png',
 			...winSigningConfig,
 		}),
 		new MakerDMG({
@@ -133,24 +136,22 @@ const config: ForgeConfig = {
 		new sidecar.SidecarPlugin(),
 	],
 	hooks: {
-		readPackageJson: async (_config, packageJson) => {
-			packageJson.analytics = {};
-
-			if (process.env.SENTRY_TOKEN) {
-				packageJson.analytics.sentry = {
-					token: process.env.SENTRY_TOKEN,
-				};
+		postPackage: async (_forgeConfig, options) => {
+			if (options.platform === 'linux') {
+				// symlink the etcher binary from balena-etcher to balenaEtcher to ensure compatibility with the wdio suite and the old name
+				await new Promise<void>((resolve, reject) => {
+					exec(
+						`ln -s "${options.outputPaths}/balena-etcher" "${options.outputPaths}/balenaEtcher"`,
+						(err) => {
+							if (err) {
+								reject(err);
+							} else {
+								resolve();
+							}
+						},
+					);
+				});
 			}
-
-			if (process.env.AMPLITUDE_TOKEN) {
-				packageJson.analytics.amplitude = {
-					token: 'balena-etcher',
-				};
-			}
-
-			// packageJson.packageType = 'dmg' | 'AppImage' | 'rpm' | 'deb' | 'zip' | 'nsis' | 'portable'
-
-			return packageJson;
 		},
 	},
 };

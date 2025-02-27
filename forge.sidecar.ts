@@ -1,5 +1,5 @@
 import { PluginBase } from '@electron-forge/plugin-base';
-import {
+import type {
 	ForgeHookMap,
 	ResolvedForgeConfig,
 } from '@electron-forge/shared-types';
@@ -90,7 +90,7 @@ function build(
 				// always build for host platform and node version
 				// https://github.com/vercel/pkg-fetch/releases
 				'--target',
-				`node18-${arch}`,
+				`node20-${arch}`,
 				'--output',
 				binPath,
 			],

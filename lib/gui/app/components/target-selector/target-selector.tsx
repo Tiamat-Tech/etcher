@@ -17,10 +17,8 @@
 import * as React from 'react';
 import { Flex, Txt } from 'rendition';
 
-import {
-	DriveSelector,
-	DriveSelectorProps,
-} from '../drive-selector/drive-selector';
+import type { DriveSelectorProps } from '../drive-selector/drive-selector';
+import { DriveSelector } from '../drive-selector/drive-selector';
 import {
 	isDriveSelected,
 	getImage,
@@ -36,7 +34,7 @@ import { TargetSelectorButton } from './target-selector-button';
 import TgtSvg from '../../../assets/tgt.svg';
 import DriveSvg from '../../../assets/drive.svg';
 import { warning } from '../../../../shared/messages';
-import { DrivelistDrive } from '../../../../shared/drive-constraints';
+import type { DrivelistDrive } from '../../../../shared/drive-constraints';
 import * as i18next from 'i18next';
 
 export const getDriveListLabel = () => {
@@ -102,12 +100,14 @@ interface TargetSelectorProps {
 	disabled: boolean;
 	hasDrive: boolean;
 	flashing: boolean;
+	hideAnalyticsAlert: () => void;
 }
 
 export const TargetSelector = ({
 	disabled,
 	hasDrive,
 	flashing,
+	hideAnalyticsAlert,
 }: TargetSelectorProps) => {
 	// TODO: inject these from redux-connector
 	const [{ driveListLabel, targets }, setStateSlice] = React.useState(
@@ -139,6 +139,7 @@ export const TargetSelector = ({
 				tooltip={driveListLabel}
 				openDriveSelector={() => {
 					setShowTargetSelectorModal(true);
+					hideAnalyticsAlert();
 				}}
 				reselectDrive={() => {
 					analytics.logEvent('Reselect drive');

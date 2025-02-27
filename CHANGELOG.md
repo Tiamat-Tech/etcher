@@ -3,6 +3,129 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+# v2.1.0
+## (2025-02-27)
+
+* Add informational notice about how to disable analytics collection [myarmolinsky]
+
+# v2.0.0
+## (2025-02-20)
+
+* major: build on ubuntu 22 and macos 13 [Edwin Joassart]
+
+# v1.19.25
+## (2024-10-10)
+
+* patch: bump etcher-sdk to 9.1.2 [Edwin Joassart]
+
+# v1.19.24
+## (2024-10-09)
+
+* patch: etcher-util is corrupted in RPM package [Richard Glidden]
+
+# v1.19.23
+## (2024-10-09)
+
+* patch: remove gconf2 libgconf-2-4 deps [Marc-Aurèle Brothier]
+
+# v1.19.22
+## (2024-07-18)
+
+* Replace deprecated Flowzone inputs [Kyle Harding]
+
+# v1.19.21
+## (2024-05-30)
+
+* patch: fix missing windows dependency [Edwin Joassart]
+* patch: fix missing windows dependency [Edwin Joassart]
+* patch: fix missing windows dependency [Edwin Joassart]
+
+# v1.19.20
+## (2024-05-30)
+
+* patch: fix missing windows dependency [Edwin Joassart]
+
+# v1.19.19
+## (2024-05-28)
+
+* patch: add sentry debug flag [Edwin Joassart]
+
+# v1.19.18
+## (2024-05-22)
+
+* patch: fix Sentry DSN for main process [Edwin Joassart]
+
+# v1.19.17
+## (2024-05-09)
+
+* patch: fix injection of analytics key at build time [JOASSART Edwin]
+
+# v1.19.16
+## (2024-04-26)
+
+* patch: hold request for metadata while waiting for flasher [Edwin Joassart]
+
+# v1.19.15
+## (2024-04-26)
+
+* patch: bump etcher-sdk to 9.0.11 to fix url loading using http/2 [Edwin Joassart]
+
+# v1.19.14
+## (2024-04-25)
+
+* patch: pretty-bytes to 6.1.1 [JOASSART Edwin]
+
+# v1.19.13
+## (2024-04-25)
+
+* patch: use etcher icon as loading for windows installer [Edwin Joassart]
+* patch: fix windows squirrel install [Edwin Joassart]
+
+# v1.19.12
+## (2024-04-25)
+
+* patch: bump minors & patch [Edwin Joassart]
+* patch: bump @electron-forge/* to 7.4.0 [Edwin Joassart]
+* patch: bump electron to 30.0.1 & @electron/remote to 2.1.2 [Edwin Joassart]
+* patch: npm upgrade [Edwin Joassart]
+* patch: bump @balena/lint to 8.0.2 and fix formating [Edwin Joassart]
+* patch: fix pretty-bytes imports [Edwin Joassart]
+* patch: bump etcher-sdk to 9.0.9 [Edwin Joassart]
+
+# v1.19.11
+## (2024-04-25)
+
+* patch: setup wdio and port (most) tests [Edwin Joassart]
+
+# v1.19.10
+## (2024-04-23)
+
+* patch: remove node-ipc and tests [Edwin Joassart]
+* patch: switch api; use ws; integrate sudo-prompt - switch api roles flow - use websocket instead of node-ipc - integrate; modernize; simplify and deprecate sudo-prompt [Edwin Joassart]
+* patch: refactor api to use a single topic [Edwin Joassart]
+* patch: set require node engine to 20 [Edwin Joassart]
+
+# v1.19.9
+## (2024-04-22)
+
+* patch: prevent rebuild of native deps by @electron/rebuild [Edwin Joassart]
+
+# v1.19.8
+## (2024-04-22)
+
+* patch: replace deprecated pkg with yao-pkg and bump etcher-util node v to 20.10 [Edwin Joassart]
+
+# v1.19.7
+## (2024-04-22)
+
+* patch: fix formating [Edwin Joassart]
+* patch: configure prettier in the project to use balena-lint configuration [Edwin Joassart]
+
+# v1.19.6
+## (2024-04-19)
+
+* patch: fix win signature process [Edwin Joassart]
+
 # v1.19.5
 ## (2024-02-14)
 
